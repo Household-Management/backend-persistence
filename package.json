@@ -4,13 +4,22 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "upload" : "aws lambda update-function-code --function-name homeplanit-persist-user-data --zip-file fileb://dist.zip"
+    "test": "jest",
+    "upload": "aws lambda update-function-code --function-name homeplanit-persist-user-data --zip-file fileb://dist.zip",
+    "compile": "npx tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/node": "^10.11.3",
     "aws-sdk": "^2.325.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.12",
+    "@types/lambda-tester": "^3.5.1",
+    "aws-sdk-mock": "^4.3.0",
+    "jest": "^23.6.0",
+    "lambda-tester": "^3.5.0"
   }
 }

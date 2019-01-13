@@ -16,14 +16,16 @@ export function saveData(event: any, context: any, callback: any) {
             });
         }
         dynamodb.putItem({
-            Item: DynamoDB.Converter.marshall(Object.assign(event.data, {username: event.user})),
+            Item: DynamoDB.Converter.marshall({...event.data, ...{username: event.user}}),
             TableName: tableName,
         }, (error: any) => {
             callback(error, JSON.stringify({
-                statusCode: 200,
+                statusCode: error ? 500 : 200,
             }));
         });
     } catch (e) {
         callback(e);
     }
 }
+
+export default saveData;

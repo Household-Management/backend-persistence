@@ -1,2 +1,6 @@
 *.zip
 dist
+node_modules
+
+*.js
+!gulpfile.js
