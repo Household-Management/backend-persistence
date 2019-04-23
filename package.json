@@ -20,6 +20,7 @@
     "@types/lambda-tester": "^3.5.1",
     "aws-sdk-mock": "^4.3.0",
     "jest": "^23.6.0",
-    "lambda-tester": "^3.5.0"
+    "lambda-tester": "^3.5.0",
+    "typescript": "^3.4.4"
   }
 }

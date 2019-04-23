@@ -4,16 +4,13 @@ export function saveData(event: any, context: any, callback: any) {
     try {
         const dynamodb = new DynamoDB();
         let tableName;
-        switch (event.metadata.state) {
+        switch (event.metadata.stage) {
             case "staging":
                 tableName = "Homeplanit-Users-Staging";
                 break;
         }
         if (!tableName) {
-            return callback({
-                message: "No table name defined for specified stage",
-                statusCode: 500,
-            });
+            throw new Error(`No table defined for stage ${event.metadata.stage}`)
         }
         dynamodb.putItem({
             Item: DynamoDB.Converter.marshall({...event.data, ...{username: event.user}}),
@@ -24,7 +21,8 @@ export function saveData(event: any, context: any, callback: any) {
             }));
         });
     } catch (e) {
-        callback(e);
+        console.error(e);
+        callback("An unexpected error occurred.");
     }
 }
 

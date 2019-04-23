@@ -18,7 +18,7 @@ describe("persistence handler", () => {
         return LambdaTester(handler)
             .event({
                 metadata: {
-                    state: "staging",
+                    stage: "staging",
                 },
             })
             .expectResult((result:any) => {
@@ -26,11 +26,11 @@ describe("persistence handler", () => {
                 expect(parsed.statusCode).toBe(200);
             });
     });
-    it ("attempts to write to the database and return 500 on a failed write", () => {
+    it("attempts to write to the database and return 500 on a failed write", () => {
         return LambdaTester(handler)
             .event({
                 metadata: {
-                    state: "staging",
+                    stage: "staging",
                 },
                 data: {
                     name: "invalid"
@@ -40,4 +40,18 @@ describe("persistence handler", () => {
                 console.log(result);
             });
     });
+    it("returns an error if no table is matched", () => {
+        return LambdaTester(handler)
+            .event({
+                metadata: {
+                    stage: "fake",
+                },
+                data: {
+                    name: "invalid"
+                },
+            })
+            .expectError((result:any) => {
+                console.log(result);
+            });
+    })
 });
